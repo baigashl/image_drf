@@ -7,7 +7,6 @@ def upload_post_image(instance, filename):
 
 
 class Post(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to='post_image', null=True, blank=True)
 

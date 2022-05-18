@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-bx0+7wr*em)3hw29-&p8ugrrnz0d5a-bv%v+#gq7$g092a0rb^
 DEBUG = True
 
 ALLOWED_HOSTS = []
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -54,7 +55,10 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

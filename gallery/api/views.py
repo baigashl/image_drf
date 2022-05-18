@@ -2,20 +2,22 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.mixins import UpdateModelMixin, DestroyModelMixin
 from rest_framework.views import APIView
 from rest_framework import permissions
+from rest_framework.permissions import AllowAny
 from gallery.api.serializers import PostSerializer
 from gallery.models import Post
 from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
+    ListCreateAPIView,
     RetrieveAPIView,
     UpdateAPIView,
     DestroyAPIView
 )
 
 
-class PostListAPIView(ListAPIView):
-    permission_classes = []
-    authentication_classes = []
+class PostListAPIView(ListCreateAPIView):
+    # permission_classes = [permissions.IsAuthenticated]
+    # authentication_classes = [SessionAuthentication]
     serializer_class = PostSerializer
 
     def get_queryset(self):
@@ -26,15 +28,25 @@ class PostListAPIView(ListAPIView):
         return qs
 
     def post(self, request, *args, **kwargs):
+        print('hello')
+        print(self.request.data)
         return self.create(request, *args, **kwargs)
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user)
 
 
 class PostCreateAPIView(CreateAPIView):
-    permission_classes = []
-    authentication_classes = []
+    permission_classes = [AllowAny,]
+    # authentication_classes = []
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+class PostDetailAPIView(RetrieveAPIView):
+    print('qweqwe')
+    permission_classes = [AllowAny,]
+    # authentication_classes = []
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
