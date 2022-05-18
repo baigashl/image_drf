@@ -12,14 +12,21 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['id', 'title', 'image', 'url']
 
+    # def create(self, validated_data):
+    #     images = self.context['request'].FILES
+    #     m1 = Post.objects.create(
+    #         **validated_data
+    #     )
+    #     # print(type(images['cover']))
+    #     # with open(images['cover'], 'rb') as f:
+    #     #     print(f.read())
+    #
+    #     # m1.image.add(images['cover'])
+    #     return m1
+
     def get_url(self, obj):
         request = self.context.get('request')
-        if request != {}:
-            print(request.data['cover'].file)
-            b = io.BytesIO(request.data['cover'].file)
-            print(type(b))
-            with open("test.xlsx") as f:  ## Excel File
-                print(type(f))  ## Open file is TextIOWrapper
-                bw = io.TextIOWrapper(b)  ## Conversion to TextIOWrapper
-                print(type(bw))
+        # if request.data != {}:
+        #     print(request.data)
+        #     print(type(request.FILES['cover']))
         return reverse("detail", kwargs={'id': obj.id}, request=request)
